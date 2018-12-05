@@ -118,6 +118,12 @@ import 'fancy.button.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  int _selectedIndex = 1;
+  final _widgetOptions = [
+    Text('Index 0: Home'),
+    Text('Index 1: Business'),
+    Text('Index 2: School'),
+  ];
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -125,9 +131,13 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primaryColor: Colors.blue,
       ),
-      home: new RandomWords(),
+      //home: new RandomWords(),
+      home: new Scaffold(
+        body: new MyHomePage(),
+      ),
     );
   }
+
 //    final ter = new WordPair.random();
 //    return new MaterialApp(
 //      title: 'Welcome to Flutter',
@@ -140,6 +150,69 @@ class MyApp extends StatelessWidget {
 //        ),
 //      ),
 //    );
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key}) : super(key: key);
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _selectedIndex = 1;
+  final _widgetOptions = [
+    Text('Index 0: Home'),
+    Text('Index 1: Business'),
+    Text('Index 2: School'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: new AppBar(
+        title: new Text(
+          "BlockChain APP",
+          textAlign: TextAlign.center,
+        ),
+        actions: <Widget>[
+          new IconButton(
+            icon: new Icon(Icons.star),
+            onPressed: () {
+              print("收藏成功");
+            },
+          ),
+          new IconButton(
+            icon: new Icon(Icons.share),
+            onPressed: () {
+              print("分享成功");
+            },
+          )
+        ],
+      ),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.business), title: Text('Business')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.school), title: Text('School')),
+        ],
+        currentIndex: _selectedIndex,
+        fixedColor: Colors.deepPurple,
+        onTap: _onItemTapped,
+      ),
+    );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 }
 
 class RandomWords extends StatefulWidget {
